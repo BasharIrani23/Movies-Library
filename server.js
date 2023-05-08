@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   let test = new Movie(jsonData);
   res.json(test);
 });
-
+ 
 //Favorite Page Endpoint: “/favorite”
 app.get("/favorite", (req, res) => {
   res.send("Welcome to Favorite Page");
@@ -34,6 +34,7 @@ app.use((req, res, next) => {
     message: "Page not found!",
   });
 });
+
 // handle 500 errors
 app.use((err, req, res, next) => {
   console.error(err.stack);
