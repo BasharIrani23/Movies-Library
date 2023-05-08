@@ -1,26 +1,19 @@
 # Movies-Library
-
-Project Name - Project Version
+ Project Name - Project Version
 
 **Author Name**: Bashar Alirani
 
 ## WRRC
-
-Add an image of your WRRC here
-![WRRC Pic](https://imgur.com/a/WiTfS5r)
+!()[https://imgur.com/a/AhjnH3l]
 
 ## Overview
 
-## Getting Started
 
-First the user have to create the basic files
-then he has to install the required packages
-after that he has to open the code and follow the requirements
-\*to make sure that he wrote the code correctly install "Thunder Client" extension it's easier to use .
+## Getting Started
+After install the required requirments , the user have to create account on "themoviedb.org" 
+and create his own API and start getting the information he is looking for.
 
 ## Project Features
-
-My app have the basic features asked in the lab reqirements
-I'm working on port number "3003"
-it can handle (404) error if you navigated to unexited page.
-also the (500) error if something has gone wrong on the server while processing respone or a request from a client.
+The user can route to the trending page so he will find the trending movie from the provided API
+User can also search for any TV series name or a movie..
+Also user can route for people searching page and search for any actor name.
