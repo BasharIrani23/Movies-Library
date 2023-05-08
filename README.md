@@ -4,12 +4,15 @@
 **Author Name**: Bashar Alirani
 
 ## WRRC
-Add an image of your WRRC here
+!()[https://imgur.com/a/AhjnH3l]
 
 ## Overview
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+After install the required requirments , the user have to create account on "themoviedb.org" 
+and create his own API and start getting the information he is looking for.
 
 ## Project Features
-<!-- What are the features included in you app -->
+The user can route to the trending page so he will find the trending movie from the provided API
+User can also search for any TV series name or a movie..
+Also user can route for people searching page and search for any actor name.
