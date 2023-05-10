@@ -7,7 +7,7 @@ Project Name - Project Version
 ## WRRC
 
 Add an image of your WRRC here
-![WRRC Pic](https://imgur.com/a/WiTfS5r)
+![read](./Readme.jpg)
 
 ## Overview
 
