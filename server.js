@@ -57,7 +57,9 @@ function Movie(ex) {
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
 async function handleTrending(req, res) {
-  const data = await axios.get(
+  // Destructring the object
+  // instead of using data.data we use only data
+  const { data } = await axios.get(
     `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.APIKEY}`
   );
 
