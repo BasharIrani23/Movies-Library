@@ -63,8 +63,11 @@ async function handleTrending(req, res) {
     `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.APIKEY}`
   );
 
+  const formatedData = data.results.map((e) => {
+    return new Movie(e);
+  });
   res.status(200).json({
-    results: data.data,
+    results: formatedData,
   });
 }
 
