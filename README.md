@@ -4,7 +4,7 @@
 **Author Name**: Bashar Alirani
 
 ## WRRC
-!()[https://imgur.com/a/AhjnH3l]
+![Readme](./Read2.jpg)
 
 ## Overview
 
