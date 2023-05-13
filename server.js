@@ -7,7 +7,8 @@ require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 const axios = require("axios");
 const jsonData = require("./Movie Data/data.json");
-
+app.use(handle404);
+app.use(handle500);
 app.get("/", handleHome);
 app.get("/favorite", handleFavorite);
 app.get("/trending", handleTrending);
@@ -20,28 +21,26 @@ function handleHome(req, res) {
   let test = new Movie(jsonData);
   res.json(test);
 }
-
 //Favorite Page Endpoint: “/favorite”
 function handleFavorite(req, res) {
   res.send("Welcome to Favorite Page");
 }
 
 // handle 404 errors
-app.use((req, res, next) => {
+function handle404(req, res, next) {
   res.status(404).json({
     statusCode: 404,
     message: "Page not found!",
   });
-});
+}
 
 // handle 500 errors
-app.use((err, req, res, next) => {
-  console.error(err.stack);
+function handle500(err, req, res, next) {
   res.status(500).json({
     statusCode: 500,
     message: "Internal server error!",
   });
-});
+}
 
 //Create a constructor function to ensure your data follow the same format.
 function Movie(ex) {
