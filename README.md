@@ -18,8 +18,7 @@ Project Name - Project Version
 
 ## Getting Started
 
-In this lab you have to edit you enviroment and create a schema.sql file after creating your database.
-
+Complete the work you have done branch 13
 ## Project Features
 
 
