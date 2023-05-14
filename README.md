@@ -6,8 +6,6 @@ Project Name - Project Version
 
 ## WRRC
 
-![Readme](./Read2.jpg)
-=======
 
 ![Sql](./Sql.jpg)
 
