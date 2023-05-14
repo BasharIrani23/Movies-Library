@@ -3,28 +3,30 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 app.use(cors());
+app.use(express.json());
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 const axios = require("axios");
 const jsonData = require("./Movie Data/data.json");
-//app.use(handle404);
-//app.use(handle500);
+const pg = require("pg");
+const client = new pg.Client(process.env.DBURL);
+
+client
+  .connect()
+  .then(() => console.log("connection successed"))
+  .catch((e) => console.error("connection failed " + e));
+
+//************************* *****************************/
+
 app.get("/", handleHome);
 app.get("/favorite", handleFavorite);
 app.get("/trending", handleTrending);
 app.get("/search", handleSearching);
 app.get("/searchPeople", handlePeopleSearching);
 app.get("/searchTvShow", handleSearchTv);
-
-//Home Page Endpoint: “/”
-function handleHome(req, res) {
-  let test = new Movie(jsonData);
-  res.json(test);
-}
-//Favorite Page Endpoint: “/favorite”
-function handleFavorite(req, res) {
-  res.send("Welcome to Favorite Page");
-}
+app.post("/addMovie", handleAddMovie);
+app.get("/getMovies", handleGetMovies);
+//************************* *****************************/
 
 // handle 404 errors
 app.use((req, res, next) => {
@@ -34,14 +36,25 @@ app.use((req, res, next) => {
   });
 });
 
-
 // handle 500 errors
-app.use((err, req, res, next)=> {
+app.use((err, req, res, next) => {
+  console.error(err.stack);
   res.status(500).json({
     statusCode: 500,
     message: "Internal server error!",
   });
 });
+
+//Home Page Endpoint: “/”
+function handleHome(req, res) {
+  let test = new Movie(jsonData);
+  res.json(test);
+}
+
+//Favorite Page Endpoint: “/favorite”
+function handleFavorite(req, res) {
+  res.send("Welcome to Favorite Page");
+}
 
 //Create a constructor function to ensure your data follow the same format.
 function Movie(ex) {
@@ -57,17 +70,12 @@ function Movie(ex) {
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
 async function handleTrending(req, res) {
-  // Destructring the object
-  // instead of using data.data we use only data
-  const { data } = await axios.get(
+  const data = await axios.get(
     `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.APIKEY}`
   );
 
-  const formatedData = data.results.map((e) => {
-    return new Movie(e);
-  });
   res.status(200).json({
-    results: formatedData,
+    results: data.data,
   });
 }
 
@@ -102,4 +110,33 @@ async function handleSearchTv(req, res) {
   res.status(200).json({
     results: data.data,
   });
+}
+
+function handleAddMovie(req, res) {
+  const userInput = req.body;
+  const sql = `insert into movies(title, comments) values($1, $2) returning *`;
+  const handleValueFromUser = [userInput.title, userInput.comments];
+  //here we can use await client  or .then to avoid promise hell
+  client
+    .query(sql, handleValueFromUser)
+    .then((data) => {
+      res.status(201).json(data.rows);
+    })
+    .catch((err) => console.log(err));
+}
+
+// //////////////get req
+function handleGetMovies(req, res) {
+  const sql = `SELECT * FROM movies`;
+  client
+    .query(sql)
+    .then((data) => {
+      console.log(data);
+      res.json({
+        data: data.rows,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send("Error in the server at <br>" + err);
+    });
 }
