@@ -22,6 +22,7 @@ In this lab you have to edit you enviroment and create a schema.sql file after c
 
 ## Project Features
 
+
 The user can route to the trending page so he will find the trending movie from the provided API
 User can also search for any TV series name or a movie..
 Also user can route for people searching page and search for any actor name.
