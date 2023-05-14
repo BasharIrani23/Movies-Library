@@ -26,6 +26,9 @@ app.get("/searchPeople", handlePeopleSearching);
 app.get("/searchTvShow", handleSearchTv);
 app.post("/addMovie", handleAddMovie);
 app.get("/getMovies", handleGetMovies);
+app.get("/getMovie/:id", handleGetMovieById);
+app.put("/updateMovie/:id", handleUpdateMovie);
+app.delete("/deleteMovie/:id", handleDeleteMovie);
 //************************* *****************************/
 
 // handle 404 errors
@@ -139,4 +142,51 @@ function handleGetMovies(req, res) {
     .catch((err) => {
       res.status(500).send("Error in the server at <br>" + err);
     });
+}
+
+function handleGetMovieById(req, res) {
+  const id = req.params.id;
+  const sql = `SELECT * FROM movies WHERE id=$1`;
+  const handleValueFromUser = [id];
+
+  client.query(sql, handleValueFromUser).then((data) => {
+    if (data.rows.length > 0) {
+      res.status(200).json(data.rows[0]);
+    } else {
+      res.status(404).json({
+        error: "Movie not found",
+      });
+    }
+  });
+}
+
+function handleUpdateMovie(req, res) {
+  const id = req.params.id;
+  const comments = req.body.comments;
+  const values = [comments, id];
+  const sql = `UPDATE movies SET comments=$1 WHERE id=$2 RETURNING *`;
+
+  client
+    .query(sql, values)
+    .then((data) => {
+      res.status(200).json(data.rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({
+        error: "Internal server error",
+      });
+    });
+}
+
+function handleDeleteMovie(req, res) {
+  const id = req.params.id;
+  const sql = `delete from movies where id=$1`;
+  const handleValueFromUser = [id];
+  client
+    .query(sql, handleValueFromUser)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((err) => console.log(err));
 }
