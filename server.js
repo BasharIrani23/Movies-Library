@@ -204,6 +204,7 @@ function handleUpdateMovie(req, res) {
 				error: 'Internal server error',
 			});
 		});
+		
 }
 
 function handleDeleteMovie(req, res) {
